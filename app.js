@@ -44,8 +44,8 @@ app.get('/register', access, (req, resp) => {
             json: {
                 "ShortCode": "600383",
                 "ResponseType": "Complete",
-                "ConfirmationURL": "http://197.248.86.122:801/confirmation",
-                "ValidationURL": "http://197.248.86.122:801/validation"
+                "ConfirmationURL": "http://197.237.18.198:801/confirmation",
+                "ValidationURL": "http://197.237.18.198:801/validation"
             }
         },
         function (error, response, body) {
