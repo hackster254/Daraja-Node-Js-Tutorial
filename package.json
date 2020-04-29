@@ -16,6 +16,7 @@
   "author": "Benson Njunge",
   "license": "ISC",
   "dependencies": {
+    "date": "^1.0.2",
     "express": "^4.17.1",
     "nodemon": "^2.0.3",
     "request": "^2.88.2"
