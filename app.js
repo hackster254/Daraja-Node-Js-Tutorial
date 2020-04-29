@@ -19,9 +19,46 @@ const headers = {
 
 app.get('/', (req, res) => {
     let date = new Date()
-    let timestamp = date.getDate() + "" + "" + date.getMonth() + "" + "" + date.getFullYear() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
 
-    res.status(200).json({ message: "We're up and running. Happy Coding", time: new Buffer.from(timestamp).toString('base64'), token: headers })
+
+
+    //let timestamp = date.getDate().toString() + "" + "" + date.getMonth().toString() + "" + "" + date.getFullYear().toString() + "" + "" + date.getHours().toString() + "" + "" + date.getMinutes().toString() + "" + "" + date.getSeconds().toString()
+    let timestamp = date.getDate() + "" + "" + date.getMonth() + "" + "" + date.getFullYear() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
+    //res.status(200).json({ message: "We're up and running. Happy Coding", time: new Buffer.from(timestamp).toString("base64"), token: headers })
+
+
+    let date_ob = new Date();
+// current date
+// adjust 0 before single digit date
+let date1 = ("0" + date_ob.getDate()).slice(-2);
+
+// current month
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+// current year
+let year = date_ob.getFullYear();
+
+// current hours
+let hours = date_ob.getHours();
+
+// current minutes
+let minutes = date_ob.getMinutes();
+
+// current seconds
+let seconds = date_ob.getSeconds();
+
+let finaldate = year + month + date1 + hours + minutes + seconds;
+// prints date in YYYY-MM-DD format
+console.log(year + "-" + month + "-" + date);
+
+// prints date & time in YYYY-MM-DD HH:MM:SS format
+console.log(year + "-" + month + "-" + date1 + " " + hours + ":" + minutes + ":" + seconds);
+
+// prints time in HH:MM format
+console.log(hours + ":" + minutes);
+//res.status(200).json({ message: "We're up and running. Happy Coding", time: new Buffer.from(timestamp).toString(), token: headers })
+res.status(200).json({ message: "We're up and running. Happy Coding", time: finaldate, token: headers })
+
 })
 
 app.get('/access_token', access, (req, res) => {
@@ -133,11 +170,35 @@ app.get('/stk', access, (req, res) => {
     const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
         auth = "Bearer " + req.access_token
 
-    let date = new Date();
+    let date = new Date()
     //let Date timestamp = new Date();
     //const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
-    const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
-    const password = new Buffer.from('174379' + 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919' + timestamp).toString('base64')
+    let timestamp = date.getFullYear().toString() + "" + "" + date.getMonth().toString() + "" + "" + date.getDate().toString() + "" + "" + date.getHours().toString() + "" + "" + date.getMinutes().toString() + "" + "" + date.getSeconds().toString()
+    //const password = new Buffer.from('174379' + 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919' + timestamp).toString('base64')
+
+    let date_ob = new Date();
+// current date
+// adjust 0 before single digit date
+let date1 = ("0" + date_ob.getDate()).slice(-2);
+
+// current month
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+// current year
+let year = date_ob.getFullYear();
+
+// current hours
+let hours = date_ob.getHours();
+
+// current minutes
+let minutes = date_ob.getMinutes();
+
+// current seconds
+let seconds = date_ob.getSeconds();
+
+let finaldate = year + month + date1 + hours + minutes + seconds;
+
+const password = new Buffer.from('174379' + 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919' + finaldate).toString('base64')
 
     request(
         {
@@ -149,7 +210,7 @@ app.get('/stk', access, (req, res) => {
             json: {
                 "BusinessShortCode": "174379",
                 "Password": password,
-                "Timestamp": timestamp,
+                "Timestamp": finaldate,//timestamp
                 "TransactionType": "CustomerPayBillOnline",
                 "Amount": "1",
                 "PartyA": "254718385412",//254716437799
@@ -263,12 +324,14 @@ app.post('/b2c_timeout_url', (req, res) => {
 app.post('/stk_callback', (req, res) => {
     console.log('.......... STK Callback ..................')
     console.log(JSON.stringify(req.body.Body.stkCallback))
+    console.log(timestamp)
 })
 
 app.post('/bal_result', (req, resp) => {
     console.log('.......... Account Balance RESULT..................')
     console.log(req.body.Result.ResultParameters)
     console.log(req.body)
+
 })
 
 app.post('/bal_timeout', (req, resp) => {
