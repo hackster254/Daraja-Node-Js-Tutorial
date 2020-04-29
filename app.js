@@ -44,8 +44,8 @@ app.get('/register', access, (req, resp) => {
             json: {
                 "ShortCode": "600383",
                 "ResponseType": "Complete",
-                "ConfirmationURL": "http://197.237.18.198:801/confirmation",
-                "ValidationURL": "http://197.237.18.198:801/validation"
+                "ConfirmationURL": "http://197.237.18.198:80/confirmation",
+                "ValidationURL": "http://197.237.18.198:80/validation"
             }
         },
         function (error, response, body) {
@@ -114,8 +114,8 @@ app.get('/balance', access, (req, resp) => {
                 "PartyA": "600343",
                 "IdentifierType": "4",
                 "Remarks": "bal",
-                "QueueTimeOutURL": "http://197.237.18.198:801/bal_timeout",
-                "ResultURL": "http://197.237.18.198:801/bal_result"
+                "QueueTimeOutURL": "http://197.237.18.198:80/bal_timeout",
+                "ResultURL": "http://197.237.18.198:80/bal_result"
             }
         },
         function (error, response, body) {
@@ -132,7 +132,10 @@ app.get('/balance', access, (req, resp) => {
 app.get('/stk', access, (req, res) => {
     const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
         auth = "Bearer " + req.access_token
-    let date = new Date()
+
+    let date = new Date();
+    //let Date timestamp = new Date();
+    //const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
     const timestamp = date.getFullYear() + "" + "" + date.getMonth() + "" + "" + date.getDate() + "" + "" + date.getHours() + "" + "" + date.getMinutes() + "" + "" + date.getSeconds()
     const password = new Buffer.from('174379' + 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919' + timestamp).toString('base64')
 
@@ -149,10 +152,10 @@ app.get('/stk', access, (req, res) => {
                 "Timestamp": timestamp,
                 "TransactionType": "CustomerPayBillOnline",
                 "Amount": "1",
-                "PartyA": "254716437799",
+                "PartyA": "254718385412",//254716437799
                 "PartyB": "174379",
-                "PhoneNumber": "254716437799",
-                "CallBackURL": "http://197.248.86.122:801/stk_callback",
+                "PhoneNumber": "254718385412",
+                "CallBackURL": "http://197.237.18.198:801/stk_callback",
                 "AccountReference": "Test",
                 "TransactionDesc": "TestPay"
             }
@@ -179,15 +182,15 @@ app.get('/b2c', access, (req, res) => {
             "Authorization": auth
         },
         json: {
-            "InitiatorName": "apitest342",
-            "SecurityCredential": "Q9KEnwDV/V1LmUrZHNunN40AwAw30jHMfpdTACiV9j+JofwZu0G5qrcPzxul+6nocE++U6ghFEL0E/5z/JNTWZ/pD9oAxCxOik/98IYPp+elSMMO/c/370Joh2XwkYCO5Za9dytVmlapmha5JzanJrqtFX8Vez5nDBC4LEjmgwa/+5MvL+WEBzjV4I6GNeP6hz23J+H43TjTTboeyg8JluL9myaGz68dWM7dCyd5/1QY0BqEiQSQF/W6UrXbOcK9Ac65V0+1+ptQJvreQznAosCjyUjACj35e890toDeq37RFeinM3++VFJqeD5bf5mx5FoJI/Ps0MlydwEeMo/InA==",
+            "InitiatorName": "testapi0343",
+            "SecurityCredential": "krpwri5PM3oHxs2PE9+uyg13oceSfiZMVE/9C7zwbQ5JTqW/TsIx7ADh4qS7Jb25R5FA+coPglPTOETw3S1s0rOuJo2XQap9sZ0RNGQt0j4kkgmPxMhOsfzbkjegxxl2cxntVV6pFIgvqkZpIvcaswL6lvM8oyizS3yghMJbxyrTshqlXI4sPdpfduCqZ52J9cVF0XbMf9z8WERMhhaDoNjU9Uq5m8RfRZygLnEj0Opmbvblq4dD1gkBzcUdc3rJgxirGHAZOxQk797ObeB/JRyI1HTEqZhjDBdlJ9YmsRA1zNT8PR22jEu2L0ffBFqZMw1xB+v0zOAPvcfqQNXqvg==",
             "CommandID": "BusinessPayment",
             "Amount": "200",
-            "PartyA": "601342",
+            "PartyA": "600343",
             "PartyB": "254708374149",
-            "Remarks": "please pay",
-            "QueueTimeOutURL": "http://197.248.86.122:801/b2c_timeout_url",
-            "ResultURL": "http://197.248.86.122:801/b2c_result_url",
+            "Remarks": "please pay254",
+            "QueueTimeOutURL": "http://197.237.18.198:80/b2c_timeout_url",
+            "ResultURL": "http://197.237.18.198:80/b2c_result_url",
             "Occasion": "endmonth"
         }
     },
@@ -253,7 +256,7 @@ app.post('/b2c_result_url', (req, res) => {
 })
 
 app.post('/b2c_timeout_url', (req, res) => {
-    console.log("-------------------- B2C Timeout -----------------")
+    console.log("-------------------- B2C Timeout overstayed -----------------")
     console.log(req.body)
 })
 
