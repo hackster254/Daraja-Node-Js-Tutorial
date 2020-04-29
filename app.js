@@ -108,14 +108,14 @@ app.get('/balance', access, (req, resp) => {
                 "Authorization": auth
             },
             json: {
-                "Initiator": "apitest342",
-                "SecurityCredential": "Q9KEnwDV/V1LmUrZHNunN40AwAw30jHMfpdTACiV9j+JofwZu0G5qrcPzxul+6nocE++U6ghFEL0E/5z/JNTWZ/pD9oAxCxOik/98IYPp+elSMMO/c/370Joh2XwkYCO5Za9dytVmlapmha5JzanJrqtFX8Vez5nDBC4LEjmgwa/+5MvL+WEBzjV4I6GNeP6hz23J+H43TjTTboeyg8JluL9myaGz68dWM7dCyd5/1QY0BqEiQSQF/W6UrXbOcK9Ac65V0+1+ptQJvreQznAosCjyUjACj35e890toDeq37RFeinM3++VFJqeD5bf5mx5FoJI/Ps0MlydwEeMo/InA==",
+                "Initiator": "testapi0343",//apitest342
+                "SecurityCredential": "QTgAFupDH5lsFfsv6RKspB4TG8w7FTRFmavSWDahcOVuaKh0wVWlwf/nMAa6fh9O+atZGSNuoO7HXh3c2PiS0x4GgIC9OFGK8yQ+NcqdQbSw/Ms1zwOHFydlFQJD80AGVxoVx2LhOSnim1AuDtXK/dtl5fTCRl+8niICwhZFdZvBLltsLRXe7ztFFLLP6rzFHt/B23HjYM8qs8UBE04Ub8kNGUhFZxzOiV5EzwrpsCB8+GNitgyjyZQ/8KW+k3j50qyaMnTSS7DFD1+GxUGkvpKMhNChLmhFYNNCQ7YQH0HKVPICxWzqARJkOCQ5Rku3k/VQKTmW0A6jnhq7DPQUvw==",
                 "CommandID": "AccountBalance",
-                "PartyA": "601342",
+                "PartyA": "600343",
                 "IdentifierType": "4",
                 "Remarks": "bal",
-                "QueueTimeOutURL": "http://197.248.86.122:801/bal_timeout",
-                "ResultURL": "http://197.248.86.122:801/bal_result"
+                "QueueTimeOutURL": "http://197.237.18.198:801/bal_timeout",
+                "ResultURL": "http://197.237.18.198:801/bal_result"
             }
         },
         function (error, response, body) {
@@ -263,7 +263,8 @@ app.post('/stk_callback', (req, res) => {
 })
 
 app.post('/bal_result', (req, resp) => {
-    console.log('.......... Account Balance ..................')
+    console.log('.......... Account Balance RESULT..................')
+    console.log(req.body.Result.ResultParameters)
     console.log(req.body)
 })
 
@@ -275,7 +276,7 @@ app.post('/bal_timeout', (req, resp) => {
 function access(req, res, next) {
     // access token
     let url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-    let auth = new Buffer.from("85MRpefVx4EdgWshx8cTrBt16ssYRxTg:JE9GqoasQcKL9e2W").toString('base64');
+    let auth = new Buffer.from("Jx5nyb0J5e61uwbAvG4q2AJE4ttqjJld:ww2VLKO5iN1bAOnv").toString('base64');
 
     request(
         {
@@ -301,7 +302,7 @@ function access(req, res, next) {
 function access_token() {
     // access token
     let url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-    let auth = new Buffer.from("85MRpefVx4EdgWshx8cTrBt16ssYRxTg:JE9GqoasQcKL9e2W").toString('base64');
+    let auth = new Buffer.from("Jx5nyb0J5e61uwbAvG4q2AJE4ttqjJld:ww2VLKO5iN1bAOnv").toString('base64');
 
     request(
         {
@@ -317,6 +318,10 @@ function access_token() {
             else {
                 // let resp = 
                return JSON.parse(body).access_token
+
+
+
+               //req.access_token = JSON.parse(body).access_token
             }
         }
     )
